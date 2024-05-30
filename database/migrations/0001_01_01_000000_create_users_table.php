@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
+            $table->string('provider'); // google, github
+            $table->string('provider_id')->unique(); // ソーシャルプロバイダーから取得したユーザーID(一意な値)
+            $table->string('avatar')->nullable(); // アバターURL
+            $table->string('token'); // アクセストークン
+            $table->string('token_secret')->nullable(); // トークンシークレット
             $table->timestamps();
         });
 
