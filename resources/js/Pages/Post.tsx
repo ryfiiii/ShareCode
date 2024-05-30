@@ -1,7 +1,15 @@
-import React from "react";
+import Layout from "@/Layouts/Layout";
+import { Head } from "@inertiajs/react";
 
 const Post = () => {
-    return <div>Post</div>;
+    return (
+        <>
+            <Head title="Post" />
+            <Layout>
+                Post
+            </Layout>
+        </>
+    );
 };
 
 export default Post;

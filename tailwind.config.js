@@ -13,6 +13,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
+                main: ['Inter', 'sans-serif', 'Figtree', ...defaultTheme.fontFamily.sans],
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
@@ -22,4 +23,11 @@ export default {
         forms,
         require('daisyui'),
     ],
+
+    daisyui: {
+        themes: [
+            'light',
+            'dark',
+        ],
+    },
 };

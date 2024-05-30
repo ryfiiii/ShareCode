@@ -6,8 +6,7 @@ const Home = () => {
         <>
             <Head title="Home" />
             <Layout>
-                <h1 className="text-neutral-content">あいうえお</h1>
-                <button className="btn btn-neutral">Neutral</button>
+                Home
             </Layout>
         </>
     );
