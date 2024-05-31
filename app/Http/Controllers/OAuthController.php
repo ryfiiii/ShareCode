@@ -20,11 +20,11 @@ class OAuthController extends Controller
      */
     public function redirectProvider($provider)
     {
-        if (!in_array($provider, config('providers.providers'))) {
-            return redirect("/")->with('message', '不正な操作を検知しました');
+        if (!in_array($provider, config('providers.providers.auth'))) {
+            return redirect("/");
         }
         if (Auth::check()) {
-            return redirect("/")->with('message', 'すでにログインしています');
+            return redirect("/");
         }
         return Socialite::driver($provider)->redirect();
     }
@@ -60,7 +60,7 @@ class OAuthController extends Controller
         );
 
         Auth::login($user, true);
-        return Inertia::render('Home');
+        return redirect("/");
     }
 
     /**
@@ -69,6 +69,6 @@ class OAuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return Inertia::render('Home');
+        return redirect("/");
     }
 }

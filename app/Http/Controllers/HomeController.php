@@ -9,7 +9,6 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        Inertia::share('activeTab', 'home');
         return Inertia::render('Home');
     }
 }

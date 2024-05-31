@@ -12,7 +12,7 @@ Route::get('/auth/callback/{provider}', [OAuthController::class, 'callbackProvid
 Route::get('/logout', [OAuthController::class, 'logout'])->name('logout');
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/post', PostController::class)->name('post.index');
+Route::get('/post', PostController::class)->name('post');
 
 
 
