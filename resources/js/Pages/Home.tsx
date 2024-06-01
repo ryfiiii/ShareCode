@@ -1,3 +1,4 @@
+import Toast from "@/Components/ui/Toast";
 import Layout from "@/Layouts/Layout";
 import { Head, Link } from "@inertiajs/react";
 
@@ -24,12 +25,6 @@ const Home = () => {
                     </p>
                 </div>
                 <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
-            </div>
-            <div className="toast toast-center">
-                <div className="alert alert-success shadow-lg" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span className="font-bold">Message sent successfully.</span>
-                </div>
             </div>
         </>
     );

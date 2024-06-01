@@ -1,11 +1,1 @@
-export interface User {
-    name: string;
-    email: string;
-    avatar: string;
-}
-
-export type InertiaPageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-    auth: {
-        user: User;
-    };
-};
+export type AlertColor = 'success' | 'error' | 'warning' | 'info';

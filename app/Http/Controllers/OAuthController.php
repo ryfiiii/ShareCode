@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
@@ -16,15 +14,14 @@ class OAuthController extends Controller
     /**
      * 指定されたプロバイダへリダイレクト
      * @param string $provider
-     * @return void
      */
     public function redirectProvider($provider)
     {
         if (!in_array($provider, config('providers.providers.auth'))) {
-            return redirect("/");
+            return redirect()->route('home')->with(['message' => '不正な操作です', 'color' => 'error']);
         }
         if (Auth::check()) {
-            return redirect("/");
+            return redirect()->route('home')->with(['message' => '既にログインしています', 'color' => 'info']);
         }
         return Socialite::driver($provider)->redirect();
     }
@@ -39,10 +36,10 @@ class OAuthController extends Controller
             $socialUser = Socialite::driver($provider)->user();
         } catch (ClientException $e) {
             Log::error($provider . '認証エラー: ' . $e->getMessage());
-            return Inertia::render('Home');
+            return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         } catch (Exception $e) {
             Log::error('エラー: ' . $e->getMessage());
-            return Inertia::render('Home');
+            return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         }
 
         $user = User::updateOrCreate(
@@ -60,7 +57,7 @@ class OAuthController extends Controller
         );
 
         Auth::login($user, true);
-        return redirect("/");
+        return redirect()->route('home')->with(['message' => 'ログインしました', 'color' => 'success']);
     }
 
     /**
@@ -69,6 +66,6 @@ class OAuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect("/");
+        return redirect()->route('home')->with(['message' => 'ログアウトしました', 'color' => 'info']);
     }
 }

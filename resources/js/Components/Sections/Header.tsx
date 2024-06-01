@@ -1,10 +1,10 @@
 import { Link, usePage } from "@inertiajs/react";
 import ToggleTheme from "../ui/ToggleTheme";
-import { InertiaPageProps } from "@/types";
+import { InertiaPageProps } from "@/types/Inertia";
 
 const Header = () => {
 
-    const { auth, activeTab } = usePage<InertiaPageProps>().props;
+    const { props } = usePage<InertiaPageProps>();
 
     return (
         <>
@@ -18,15 +18,15 @@ const Header = () => {
                         <div className="mx-3 dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar bg-base-300">
                                 <div className="w-12 rounded-full">
-                                    {auth.user ? (
-                                        <img src={auth.user.avatar} alt="icon" />
+                                    {props.auth?.user ? (
+                                        <img src={props.auth.user.avatar} alt="icon" />
                                     ) : (
-                                        <svg className="text-gray-400 m-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                                        <svg className="text-gray-400 m-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
                                     )}
                                 </div>
                             </div>
                             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                {auth.user ? (
+                                {props.auth?.user ? (
                                     <>
                                         <li className="my-1"><a>Profile</a></li>
                                         <li className="my-1"><a>Settings</a></li>
