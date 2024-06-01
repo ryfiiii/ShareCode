@@ -1,10 +1,4 @@
-import { AlertColor } from ".";
-
-export interface User {
-    name: string;
-    email: string;
-    avatar: string;
-}
+import { AlertColor, User } from ".";
 
 export type InertiaPageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
