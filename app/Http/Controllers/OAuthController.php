@@ -42,21 +42,26 @@ class OAuthController extends Controller
             return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         }
 
-        $user = User::updateOrCreate(
-            [
-                'provider_id' => $socialUser->getId(),
-                'provider' => $provider,
-            ],
-            [
-                'name' => $socialUser->getName(),
-                'email' => $socialUser->getEmail(),
-                'avatar' => $socialUser->getAvatar(),
-                'token' => $socialUser->token,
-                'token_secret' => $socialUser->tokenSecret ?? null,
-            ]
-        );
+        $user = User::where('provider_id', $socialUser->getId())->where('provider', $provider)->first();
 
-        Auth::login($user, true);
+        // ユーザーが存在する場合はログイン
+        if ($user) {
+            Auth::login($user, true);
+            return redirect()->route('home')->with(['message' => 'ログインしました', 'color' => 'success']);
+        }
+
+        // ユーザーが存在しない場合は新規作成
+        $newUser = User::create([
+            'provider_id' => $socialUser->getId(),
+            'provider' => $provider,
+            'name' => $socialUser->getName(),
+            'email' => $socialUser->getEmail(),
+            'avatar' => $socialUser->getAvatar(),
+            'token' => $socialUser->token,
+            'token_secret' => $socialUser->tokenSecret ?? null,
+        ]);
+
+        Auth::login($newUser, true);
         return redirect()->route('home')->with(['message' => 'ログインしました', 'color' => 'success']);
     }
 
