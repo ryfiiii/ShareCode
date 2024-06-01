@@ -10,5 +10,6 @@ export type InertiaPageProps<T extends Record<string, unknown> = Record<string, 
     flash: {
         message?: string;
         color?: AlertColor;
-    }
+    };
+    csrf_token: string;
 };

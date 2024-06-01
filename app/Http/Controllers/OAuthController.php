@@ -38,7 +38,7 @@ class OAuthController extends Controller
             Log::error($provider . '認証エラー: ' . $e->getMessage());
             return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         } catch (Exception $e) {
-            Log::error('エラー: ' . $e->getMessage());
+            Log::error('不明なエラー: ' . $e);
             return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         }
 

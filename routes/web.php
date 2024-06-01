@@ -27,4 +27,5 @@ Route::get('/mypage', MyPageController::class)->name('mypage');
 /* 設定 */
 Route::middleware('sc-auth')->group(function () {
     Route::get('/setting', SettingController::class)->name('setting');
+    Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
 });
