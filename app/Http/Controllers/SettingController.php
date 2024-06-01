@@ -6,7 +6,6 @@ use App\Http\Requests\UpdateUserValidate;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Util\Util;
-use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
@@ -21,7 +20,7 @@ class SettingController extends Controller
 
     /**
      * ユーザー情報の更新
-     * @param Request $request
+     * @param UpdateUserValidate $request
      */
     public function update(UpdateUserValidate $request)
     {

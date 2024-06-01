@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
         <>
             <div className="min-h-screen bg-base-200">
                 <Header />
-                <main className="mx-auto w-full px-6 xs:px-7 sm:px-10 max-w-screen-xl flex flex-col py-5">
+                <main className="mx-auto w-full px-6 xs:px-7 sm:px-10 max-w-screen-xl flex flex-col py-5 md:py-7 lg:py-10">
                     {children}
                 </main>
             </div>
