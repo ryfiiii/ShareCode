@@ -30,9 +30,14 @@ class SettingController extends Controller
 
         // 画像の保存
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $imageName = $this->randomStr() . '_' . time() . '.' . $request->avatar->getClientOriginalExtension();
-            $imageTempUrl = $request->avatar->storeAs('images/avatars', $imageName, 'public');
-            $imageUrl = env('APP_URL') . '/storage/' . $imageTempUrl;
+            $extension = $request->avatar->getClientOriginalExtension(); // 拡張子を取得
+            $imageName = $this->randomStr() . '_' . time() . '.' . $extension;
+            $imageTempUrl = $request->avatar->storeAs('images/avatars', $imageName, 'public'); // 画像を保存
+            $filePath = storage_path('app/public/' . $imageTempUrl); // 画像のパス
+
+            $this->cropImage($filePath, $extension); // 画像をクロップし上書き保存
+
+            $imageUrl = env('APP_URL') . '/storage/' . $imageTempUrl; // 画像のURL
             $user->avatar = $imageUrl;
         }
 

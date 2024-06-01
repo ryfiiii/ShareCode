@@ -38,7 +38,7 @@ const Setting = () => {
                                         <img src={props.auth.user?.avatar} alt="icon" />
                                     </div>
                                 </div>
-                                <input type="file" id="avatar" name="avatar" className="file-input file-input-bordered file-input-sm md:file-input-md w-full" />
+                                <input type="file" id="avatar" name="avatar" accept="image/jpeg, image/png" className="file-input file-input-bordered file-input-sm md:file-input-md w-full" />
                             </div>
                         </div>
                         <div className="flex flex-col mt-7">
