@@ -1,5 +1,6 @@
 import Footer from "@/Components/Sections/Footer";
 import Header from "@/Components/Sections/Header";
+import PostMenu from "@/Components/ui/PostMenu";
 import Toast from "@/Components/ui/Toast";
 import { InertiaPageProps } from "@/types/Inertia";
 import { usePage } from "@inertiajs/react";
@@ -34,6 +35,9 @@ const Layout = ({ children }: LayoutProps) => {
                 </main>
             </div>
             <Footer />
+
+            {/* 投稿メニューボタン */}
+            <PostMenu />
 
             {/* フラッシュメッセージ表示用 */}
             {isVisible && props.flash.color && props.flash.message && (

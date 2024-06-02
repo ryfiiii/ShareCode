@@ -17,11 +17,13 @@ Route::get('/logout', [OAuthController::class, 'logout'])->name('logout');
 Route::get('/', HomeController::class)->name('home');
 
 /* 投稿 */
+Route::get('/post', PostController::class)->name('post');
+Route::get('/draft', [PostController::class, 'draft'])->name('draft');
+
 Route::middleware('sc-auth')->group(function () {
-    Route::get('/post', PostController::class)->name('post');
 });
 
-/* 設定 */
+/* マイページ */
 Route::get('/mypage', MyPageController::class)->name('mypage');
 
 /* 設定 */

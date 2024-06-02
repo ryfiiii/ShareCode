@@ -20,7 +20,7 @@ const ToggleTheme = () => {
     }
 
     return (
-        <label className="swap swap-rotate">
+        <label className="swap swap-rotate text-slate-500">
 
             {/* this hidden checkbox controls the state */}
             <input type="checkbox" checked={theme === 'dark'} onChange={toggleTheme} className="hidden" />

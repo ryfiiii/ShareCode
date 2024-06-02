@@ -11,4 +11,12 @@ class PostController extends Controller
     {
         return Inertia::render('Post');
     }
+
+    /**
+     * 下書き
+     */
+    public function draft()
+    {
+        return Inertia::render('Draft');
+    }
 }
