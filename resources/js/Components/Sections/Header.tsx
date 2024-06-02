@@ -32,7 +32,7 @@ const Header = () => {
                                     <li className="my-1"><Link href={route('logout')}>ログアウト</Link></li> {/* todo あとでアイコン追加 */}
                                 </>
                             ) : (
-                                <li><label htmlFor="my_modal_7">Login</label></li>
+                                <li><label htmlFor="LoginModal">ログイン</label></li>
                             )}
                         </ul>
                     </div>
