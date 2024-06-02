@@ -1,15 +1,15 @@
 import Layout from "@/Layouts/Layout";
 import { Head } from "@inertiajs/react";
 
-const Post = () => {
+const Draft = () => {
     return (
         <>
-            <Head title="新規投稿" />
+            <Head title="下書き" />
             <Layout>
-                Post
+                下書き
             </Layout>
         </>
     );
 };
 
-export default Post;
+export default Draft;

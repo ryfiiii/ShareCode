@@ -1,7 +1,7 @@
 import Layout from "@/Layouts/Layout";
 import { InertiaPageProps } from "@/types/Inertia";
-import { Head, useForm, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { Head, usePage } from "@inertiajs/react";
+import { useState } from "react";
 
 const Setting = () => {
 
