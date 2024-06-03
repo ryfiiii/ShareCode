@@ -1,6 +1,8 @@
 import Layout from "@/Layouts/Layout";
 import { Head } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Highlight from 'react-highlight';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
 const Post = () => {
 
@@ -20,6 +22,11 @@ const Post = () => {
         setCode(e.target.value);
     }
 
+    const onKeyDownTab = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key !== 'Tab') return;
+        e.preventDefault();
+    }
+
     return (
         <>
             <Head title="新規投稿" />
@@ -32,11 +39,11 @@ const Post = () => {
                         </div>
                         <div className="mb-10">
                             <p className="ml-3 mb-2">コメント</p>
-                            <textarea onChange={handleCommentChange} className="textarea textarea-bordered w-full min-h-32 resize-none" placeholder="コメントを入力..."></textarea>
+                            <textarea onChange={handleCommentChange} className="textarea textarea-bordered w-full min-h-40 resize-none" placeholder="コメントを入力..."></textarea>
                         </div>
                         <div>
                             <p className="ml-3 mb-2">コード</p>
-                            <textarea onChange={handleCodeChange} className="textarea textarea-bordered w-full min-h-32 resize-none" placeholder="コードを入力..."></textarea>
+                            <textarea onChange={handleCodeChange} className="textarea textarea-bordered w-full min-h-40 resize-none" onKeyDown={onKeyDownTab} style={{ tabSize: 4 }} placeholder="コードを入力..."></textarea>
                         </div>
                     </div>
 
@@ -49,13 +56,13 @@ const Post = () => {
                         </div>
                         <div className="mb-10">
                             <p className="ml-3 mb-2">　</p>
-                            <textarea className="textarea textarea-bordered w-full min-h-32 resize-none disabled:text-gray-600 disabled:cursor-text" disabled value={comment}></textarea>
+                            <textarea className="textarea textarea-bordered w-full min-h-40 resize-none disabled:text-gray-600 disabled:cursor-text" disabled value={comment}></textarea>
                         </div>
                         <div>
                             <p className="ml-3 mb-2">　</p>
-                            <div className="bg-stone-700 rounded-box w-full min-h-32">
-                                <p>{code}</p>
-                            </div>
+                            <Highlight className="typescript w-full rounded-box min-h-40">
+                                {code}
+                            </Highlight>
                         </div>
                     </div>
                 </div>
