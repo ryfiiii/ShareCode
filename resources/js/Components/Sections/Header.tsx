@@ -10,7 +10,7 @@ const Header = () => {
         <>
             <div className="flex items-center justify-between py-2 w-full bg-base-100 shadow-md">
                 <div className="ml-3">
-                    <Link href={route('home')} className="btn btn-ghost text-lg md:text-2xl">ShareCode</Link>
+                    <Link href={route('home')} className="btn btn-ghost text-lg md:text-2xl font-light">ShareCode</Link>
                 </div>
                 <div className="flex justify-center items-center">
                     <ToggleTheme />
