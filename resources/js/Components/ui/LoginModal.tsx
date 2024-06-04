@@ -1,18 +1,21 @@
 type Provider = 'google' | 'github';
 
-const LoginModal = () => {
+interface LoginModalProps {
+    modalRef: React.RefObject<HTMLDialogElement>;
+}
+
+const LoginModal = ({ modalRef }: LoginModalProps) => {
 
     const handleLogin = (provider: Provider) => {
-        let url = `/auth/${provider}`;
+        const url = `/auth/${provider}`;
         window.location.href = url;
     }
 
     return (
         <>
-            <input type="checkbox" id="LoginModal" className="modal-toggle" />
-            <div className="modal p-3" role="dialog">
+            <dialog ref={modalRef} className="modal p-3">
                 <div className="modal-box w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:1/5 p-10">
-                    <h1 className="text-2xl font-bold text-center mb-10">ShareCode</h1>
+                    <h1 className="text-2xl font-bold text-center mb-10">{import.meta.env.VITE_APP_NAME}</h1>
                     <p className="mb-12 text-sm">
                         手軽に、瞬時に、世界中へ。ちょっとしたコードをすぐに共有できるサービス
                     </p>
@@ -29,8 +32,10 @@ const LoginModal = () => {
                         </button>
                     </div>
                 </div>
-                <label className="modal-backdrop" htmlFor="LoginModal">Close</label>
-            </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button></button>
+                </form>
+            </dialog>
         </>
     );
 };

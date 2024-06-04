@@ -1,6 +1,5 @@
 import Footer from "@/Components/Sections/Footer";
 import Header from "@/Components/Sections/Header";
-import LoginModal from "@/Components/ui/LoginModal";
 import PostMenu from "@/Components/ui/PostMenu";
 import Toast from "@/Components/ui/Toast";
 import { InertiaPageProps } from "@/types/Inertia";
@@ -44,9 +43,6 @@ const Layout = ({ children }: LayoutProps) => {
             {isVisible && props.flash.color && props.flash.message && (
                 <Toast color={props.flash.color} message={props.flash.message} />
             )}
-
-            {/* ログインモーダル */}
-            <LoginModal />
         </>
     );
 };

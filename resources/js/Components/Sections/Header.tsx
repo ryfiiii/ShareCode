@@ -1,16 +1,21 @@
 import { Link, usePage } from "@inertiajs/react";
 import ToggleTheme from "../ui/ToggleTheme";
 import { InertiaPageProps } from "@/types/Inertia";
+import { useRef } from "react";
+import LoginModal from "../ui/LoginModal";
 
 const Header = () => {
 
     const { props } = usePage<InertiaPageProps>();
 
+    const loginModal = useRef<HTMLDialogElement>(null);
+
     return (
         <>
+            <LoginModal modalRef={loginModal} />
             <div className="flex items-center justify-between py-2 w-full bg-base-100 shadow-md">
                 <div className="ml-3">
-                    <Link href={route('home')} className="btn btn-ghost text-lg md:text-2xl font-light">ShareCode</Link>
+                    <Link href={route('home')} className="btn btn-ghost text-lg md:text-2xl font-light">{import.meta.env.VITE_APP_NAME}</Link>
                 </div>
                 <div className="flex justify-center items-center">
                     <ToggleTheme />
@@ -32,7 +37,7 @@ const Header = () => {
                                     <li className="my-1"><Link href={route('logout')}>ログアウト</Link></li> {/* todo あとでアイコン追加 */}
                                 </>
                             ) : (
-                                <li><label htmlFor="LoginModal">ログイン</label></li>
+                                <li><label onClick={() => loginModal.current?.showModal()}>ログイン</label></li>
                             )}
                         </ul>
                     </div>

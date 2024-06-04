@@ -1,21 +1,31 @@
 import Layout from "@/Layouts/Layout";
 import { Head, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Highlight from 'react-highlight';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import { languages } from "@/util/languages";
 import { InertiaPageProps } from "@/types/Inertia";
 import { publish_status } from "@/util/publish_status";
+import axios from "axios";
+import Modal from "@/Components/ui/Modal";
 
 const Post = () => {
 
     const { props } = usePage<InertiaPageProps>();
+    const isAuth = props.auth.user ? true : false;
+    const modalRef = useRef<HTMLDialogElement>(null);
 
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState(props.auth.user?.favorite_language);
     const [publishStatus, setPublishStatus] = useState(0);
+
+    useEffect(() => {
+        if (!isAuth) {
+            modalRef.current?.showModal();
+        }
+    }, [isAuth]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -28,6 +38,7 @@ const Post = () => {
     }
     const onKeyDownTab = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key !== 'Tab') return;
+        // todo タブ入力時にインデントを増やす処理を追加
         e.preventDefault();
     }
     const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -37,8 +48,37 @@ const Post = () => {
         setPublishStatus(parseInt(e.target.value));
     }
 
+    const submitDraft = async () => {
+        try {
+            const res = await axios.post(route('post'), {
+                title: title,
+                comment: comment,
+                code: code,
+                language: language,
+                publish_status: publishStatus
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const submitPost = async () => {
+        try {
+            const res = await axios.post(route('post'), {
+                title: title,
+                comment: comment,
+                code: code,
+                language: language,
+                publish_status: publishStatus
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <>
+            <Modal modalRef={modalRef} color={"error"} text={"新規投稿をするにはログインが必要です"} />
             <Head title="新規投稿" />
             <Layout>
                 <div className="w-full bg-base-100 shadow-md rounded-box p-5 flex flex-col min-h-96 gap-12">
@@ -46,20 +86,20 @@ const Post = () => {
                         <div className="w-full md:w-1/2 md:pr-5">
                             <div className="mb-6">
                                 <p className="ml-3 mb-2">タイトル<span className="text-red-500 ml-1 font-bold">*</span></p>
-                                <input type="text" onChange={handleTitleChange} className="input input-bordered w-full" placeholder="タイトルを入力..." />
+                                <input type="text" onChange={handleTitleChange} disabled={!isAuth} className="input input-bordered w-full" placeholder="タイトルを入力..." />
                             </div>
                             <div className="mb-6">
                                 <p className="ml-3 mb-2">コメント</p>
-                                <textarea onChange={handleCommentChange} className="textarea textarea-bordered w-full min-h-32 resize-none overflow-y-auto" placeholder="コメントを入力..."></textarea>
+                                <textarea onChange={handleCommentChange} disabled={!isAuth} className="textarea textarea-bordered w-full min-h-32 resize-none overflow-y-auto" placeholder="コメントを入力..."></textarea>
                             </div>
                             <div className="mb-6">
                                 <p className="ml-3 mb-2">コード<span className="text-red-500 ml-1 font-bold">*</span></p>
-                                <textarea spellCheck="false" onChange={handleCodeChange} className="textarea textarea-bordered w-full min-h-40 resize-none" onKeyDown={onKeyDownTab} style={{ tabSize: 4 }} placeholder="コードを入力..."></textarea>
+                                <textarea spellCheck="false" onChange={handleCodeChange} disabled={!isAuth} className="textarea textarea-bordered w-full min-h-40 resize-none" onKeyDown={onKeyDownTab} style={{ tabSize: 4 }} placeholder="コードを入力..."></textarea>
                             </div>
                             <div className="mb-6 flex gap-12 items-center">
                                 <div className="w-full">
                                     <p className="ml-3 mb-2">言語<span className="text-red-500 ml-1 font-bold">*</span></p>
-                                    <select onChange={handleLanguageChange} className="select select-bordered w-full" value={language}>
+                                    <select onChange={handleLanguageChange} disabled={!isAuth} className="select select-bordered w-full" value={language}>
                                         {Object.entries(languages).map(([key, value]) => (
                                             <option key={key} value={key}>{value}</option>
                                         ))}
@@ -67,7 +107,7 @@ const Post = () => {
                                 </div>
                                 <div className="w-full">
                                     <p className="ml-3 mb-2">公開設定<span className="text-red-500 ml-1 font-bold">*</span></p>
-                                    <select onChange={handlePublishStatusChange} className="select select-bordered w-full" value={publishStatus}>
+                                    <select onChange={handlePublishStatusChange} disabled={!isAuth} className="select select-bordered w-full" value={publishStatus}>
                                         {Object.entries(publish_status).map(([key, value]) => (
                                             <option key={key} value={key}>{value}</option>
                                         ))}
@@ -97,8 +137,8 @@ const Post = () => {
                         </div>
                     </div>
                     <div className="flex justify-center item-center gap-16">
-                        <button className="btn">下書き保存</button>
-                        <button className="btn btn-neutral">投稿する</button>
+                        <button onClick={submitDraft} disabled={!isAuth} className="btn">下書き保存</button>
+                        <button onClick={submitPost} disabled={!isAuth} className="btn btn-neutral">投稿する</button>
                     </div>
                 </div>
             </Layout>
