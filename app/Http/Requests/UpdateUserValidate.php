@@ -25,6 +25,7 @@ class UpdateUserValidate extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:100',
+            'favorite_language' => 'required|string|min:1|max:100',
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
     }

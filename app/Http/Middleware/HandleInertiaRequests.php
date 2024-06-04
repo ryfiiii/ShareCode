@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                     'name' => $user->name,
                     'email' => $user->email,
                     'avatar' => $user->avatar,
+                    'favorite_language' => $user->favorite_language,
                 ] : null,
             ],
             'flash' => [

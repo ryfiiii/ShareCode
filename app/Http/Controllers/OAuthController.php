@@ -57,6 +57,7 @@ class OAuthController extends Controller
             'name' => $socialUser->getName(),
             'email' => $socialUser->getEmail(),
             'avatar' => $socialUser->getAvatar(),
+            'favorite_language' => 'javascript', // デフォルトはjavascript
             'token' => $socialUser->token,
             'token_secret' => $socialUser->tokenSecret ?? null,
         ]);

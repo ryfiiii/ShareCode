@@ -1,5 +1,6 @@
 import Layout from "@/Layouts/Layout";
 import { InertiaPageProps } from "@/types/Inertia";
+import { languages } from "@/util/languages";
 import { Head, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
@@ -8,10 +9,15 @@ const Setting = () => {
     const { props } = usePage<InertiaPageProps>();
 
     const [name, setName] = useState(props.auth.user?.name);
+    const [language, setLanguage] = useState(props.auth.user?.favorite_language);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     };
+
+    const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setLanguage(e.target.value);
+    }
 
     return (
         <>
@@ -40,6 +46,14 @@ const Setting = () => {
                         <div className="flex flex-col">
                             <label htmlFor="email" className="mb-1 text-sm">メールアドレス</label>
                             <input type="text" id="email" className="input input-bordered" disabled value={props.auth.user?.email} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="lang" className="mb-1 text-sm">お気に入りの言語</label>
+                            <select onChange={handleLanguageChange} id="lang" name="favorite_language" className="select select-bordered" value={language}>
+                                {Object.entries(languages).map(([key, value]) => (
+                                    <option key={key} value={key}>{value}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="flex flex-col mt-7">
                             <input type="hidden" name="_token" value={props.csrf_token} />

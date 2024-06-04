@@ -26,6 +26,7 @@ class SettingController extends Controller
     {
         $user = $request->user();
         $user->name = $request->name;
+        $user->favorite_language = $request->favorite_language;
 
         // 画像の保存
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {

@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('slug')->index(); // 公開URL用のスラッグ
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->text('description'); // 説明
+            $table->text('comment'); // コメント
             $table->text('code'); // コード
+            $table->string('language'); // 言語
             $table->integer('likes')->default(0); // いいね数
             $table->unsignedTinyInteger('publish_status')->default(0); // 公開ステータス(0: 非公開, 1: 公開, 2: 限定公開
             $table->boolean('is_draft')->default(true); // 下書きフラグ
