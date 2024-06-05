@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostValidate;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -18,7 +17,7 @@ class PostController extends Controller
     /**
      * 投稿を保存する
      */
-    public function post(Request $request) // todo バリデーションを追加する
+    public function post(PostValidate $request)
     {
         $post = new Post();
         $post->slug = Str::uuid()->toString();
@@ -37,7 +36,6 @@ class PostController extends Controller
 
         return response()->json(
             [
-                'color' => 'success',
                 'message' => $publish_status_text . 'で投稿しました',
                 'url' => $post->slug
             ],

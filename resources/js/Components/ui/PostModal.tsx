@@ -12,7 +12,8 @@ const PostModal = ({ modalRef, message, url }: ModalProps) => {
                 <div className="modal-box border-4 border-success">
                     <div className="flex flex-col justify-center items-center">
                         <p className="py-3 text-center text-lg">{message}</p>
-                        <a href={`http://127.0.0.1:8000/view/${url}`}>{`http://127.0.0.1:8000/view/${url}`}</a>
+                        <input type="text" className="input w-full disabled:cursor-pointer" disabled value={url} />
+                        <a href={url} className="underline mt-5">投稿を見る</a>
                     </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">

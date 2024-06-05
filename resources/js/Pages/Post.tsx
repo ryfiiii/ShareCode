@@ -9,23 +9,21 @@ import { publish_status } from "@/util/publish_status";
 import axios from "axios";
 import Modal from "@/Components/ui/Modal";
 import { PostResponse } from "@/types/ApiResponse";
-import { AlertColor } from "@/types";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { generatePostId } from "@/util/func";
 import PostModal from "@/Components/ui/PostModal";
 
 const Post = () => {
 
     const { props } = usePage<InertiaPageProps>();
     const isAuth = props.auth.user ? true : false;
+
     const noAuthModal = useRef<HTMLDialogElement>(null);
     const PostErrorResponseModal = useRef<HTMLDialogElement>(null);
     const PostResponseModal = useRef<HTMLDialogElement>(null);
 
     // モーダル関係
-    const [modalColor, setModalColor] = useState<AlertColor>();
     const [modalMessage, setModalMessage] = useState<string>('');
     const [modalPostUrl, setModalPostUrl] = useState<string>('');
 
@@ -41,7 +39,7 @@ const Post = () => {
         comment: "",
         code: "",
         language: props.auth.user?.favorite_language,
-        publish_status: 0,
+        publish_status: "0",
     }
 
     const schema = z.object({
@@ -69,12 +67,11 @@ const Post = () => {
                 comment: comment,
                 code: code,
                 language: language,
-                publish_status: publishStatus
+                publish_status: parseInt(publishStatus, 10),
             });
             console.log(res.data);
-            setModalColor(res.data.color);
             setModalMessage(res.data.message);
-            setModalPostUrl(res.data?.url);
+            setModalPostUrl(`${import.meta.env.VITE_APP_URL}/view/${res.data?.url}`);
             PostResponseModal.current?.showModal();
 
         } catch (error) {
