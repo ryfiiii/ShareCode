@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -20,7 +21,7 @@ class PostController extends Controller
     public function post(Request $request) // todo バリデーションを追加する
     {
         $post = new Post();
-        $post->slug = "a"; // todo uuidを生成して代入する
+        $post->slug = Str::uuid()->toString();
         $post->user_id = $request->user()->id;
         $post->title = $request->title;
         $post->comment = $request->comment;

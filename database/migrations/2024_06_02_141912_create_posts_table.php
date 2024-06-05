@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('slug')->index(); // 公開URL用のスラッグ
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->text('comment'); // コメント
+            $table->text('comment')->nullable(); // コメント
             $table->text('code'); // コード
             $table->string('language'); // 言語
             $table->integer('likes')->default(0); // いいね数

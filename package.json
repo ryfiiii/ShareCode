@@ -15,7 +15,7 @@
         "@types/react-highlight": "^0.12.8",
         "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.12",
-        "axios": "^1.6.4",
+        "axios": "^1.7.2",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.31",
         "react": "^18.2.0",
@@ -28,7 +28,10 @@
         "@fortawesome/fontawesome-svg-core": "^6.5.2",
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/react-fontawesome": "^0.2.2",
+        "@hookform/resolvers": "^3.5.0",
         "daisyui": "^4.11.1",
-        "react-highlight": "^0.15.0"
+        "react-highlight": "^0.15.0",
+        "react-hook-form": "^7.51.5",
+        "zod": "^3.23.8"
     }
 }
