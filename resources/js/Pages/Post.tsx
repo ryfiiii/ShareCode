@@ -8,12 +8,15 @@ import { InertiaPageProps } from "@/types/Inertia";
 import { publish_status } from "@/util/publish_status";
 import axios from "axios";
 import Modal from "@/Components/ui/Modal";
+import { PostResponse } from "@/types/ApiResponse";
+import { AlertColor } from "@/types";
 
 const Post = () => {
 
     const { props } = usePage<InertiaPageProps>();
     const isAuth = props.auth.user ? true : false;
-    const modalRef = useRef<HTMLDialogElement>(null);
+    const noAuthModal = useRef<HTMLDialogElement>(null);
+    const PostResponseModal = useRef<HTMLDialogElement>(null);
 
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
@@ -21,9 +24,14 @@ const Post = () => {
     const [language, setLanguage] = useState(props.auth.user?.favorite_language);
     const [publishStatus, setPublishStatus] = useState(0);
 
+    // モーダル関係
+    const [modalColor, setModalColor] = useState<AlertColor>();
+    const [modalMessage, setModalMessage] = useState<string>('');
+    const [modalPostUrl, setModalPostUrl] = useState<string | undefined>();
+
     useEffect(() => {
         if (!isAuth) {
-            modalRef.current?.showModal();
+            noAuthModal.current?.showModal();
         }
     }, [isAuth]);
 
@@ -64,13 +72,19 @@ const Post = () => {
 
     const submitPost = async () => {
         try {
-            const res = await axios.post(route('post'), {
+            const res = await axios.post<PostResponse>(route('post'), {
                 title: title,
                 comment: comment,
                 code: code,
                 language: language,
                 publish_status: publishStatus
             });
+            console.log(res.data);
+            setModalColor(res.data.color);
+            setModalMessage(res.data.message);
+            setModalPostUrl(res.data?.url);
+            PostResponseModal.current?.showModal();
+
         } catch (error) {
             console.error(error);
         }
@@ -78,8 +92,11 @@ const Post = () => {
 
     return (
         <>
-            <Modal modalRef={modalRef} color={"error"} text={"新規投稿をするにはログインが必要です"} />
             <Head title="新規投稿" />
+
+            <Modal modalRef={noAuthModal} color={"error"} message={"新規投稿をするにはログインが必要です"} />
+            <Modal modalRef={PostResponseModal} color={modalColor} message={modalMessage} />
+
             <Layout>
                 <div className="w-full bg-base-100 shadow-md rounded-box p-5 flex flex-col min-h-96 gap-12">
                     <div className="flex w-full flex-col md:flex-row">

@@ -17,7 +17,7 @@ class OAuthController extends Controller
      */
     public function redirectProvider($provider)
     {
-        if (!in_array($provider, config('providers.providers.auth'))) {
+        if (!in_array($provider, config('providers'))) {
             return redirect()->route('home')->with(['message' => '不正な操作です', 'color' => 'error']);
         }
         if (Auth::check()) {

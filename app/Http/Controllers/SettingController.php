@@ -43,6 +43,7 @@ class SettingController extends Controller
 
         $user->save();
 
+        // todo axiosでやり取りするように変更
         return redirect()->route('setting')->with(['message' => '更新しました', 'color' => 'success']);
     }
 }
