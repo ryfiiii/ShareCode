@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserValidate;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Util\Util;
 
@@ -13,9 +12,7 @@ class SettingController extends Controller
 
     public function __invoke()
     {
-        return Inertia::render('Setting', [
-            'csrf_token' => csrf_token(),
-        ]);
+        return Inertia::render('Setting');
     }
 
     /**
@@ -44,6 +41,12 @@ class SettingController extends Controller
         $user->save();
 
         // todo axiosでやり取りするように変更
-        return redirect()->route('setting')->with(['message' => '更新しました', 'color' => 'success']);
+        return response()->json([
+            'avatar' => $user->avatar,
+            'name' => $user->name,
+            'favorite_language' => $user->favorite_language,
+            'message' => 'ユーザー情報を更新しました',
+            'color' => 'success'
+        ]);
     }
 }

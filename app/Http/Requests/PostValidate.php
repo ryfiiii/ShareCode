@@ -34,7 +34,7 @@ class PostValidate extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $response = response()->json(['message' => '不正な操作です'], 422);
+        $response = response()->json(['message' => '不正な操作です', 'color' => 'error'], 422);
         throw new ValidationException($validator, $response);
     }
 }

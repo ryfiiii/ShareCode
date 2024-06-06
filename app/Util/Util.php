@@ -61,10 +61,10 @@ trait Util
         switch ($extension) {
             case 'jpeg':
             case 'jpg':
-                imagejpeg($cropped, $filePath, 100); // JPEGファイルを保存する場合
+                imagejpeg($cropped, $filePath, 80); // JPEGファイルを保存する場合
                 break;
             case 'png':
-                imagepng($cropped, $filePath, 90); // PNGファイルを保存する場合
+                imagepng($cropped, $filePath, 9); // PNGファイルを保存する場合
                 break;
         }
 

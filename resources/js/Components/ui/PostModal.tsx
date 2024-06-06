@@ -6,6 +6,10 @@ interface ModalProps {
 
 const PostModal = ({ modalRef, message, url }: ModalProps) => {
 
+    const handleButtonClick = () => {
+        window.location.href = url;
+    };
+
     return (
         <>
             <dialog ref={modalRef} className="modal">
@@ -17,7 +21,7 @@ const PostModal = ({ modalRef, message, url }: ModalProps) => {
                     </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">
-                    <button></button>
+                    <button onClick={handleButtonClick}></button>
                 </form>
             </dialog>
         </>

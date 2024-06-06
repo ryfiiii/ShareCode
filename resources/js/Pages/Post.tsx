@@ -19,14 +19,17 @@ const Post = () => {
     const { props } = usePage<InertiaPageProps>();
     const isAuth = props.auth.user ? true : false;
 
+    // モーダル関係
     const noAuthModal = useRef<HTMLDialogElement>(null);
     const PostErrorResponseModal = useRef<HTMLDialogElement>(null);
     const PostResponseModal = useRef<HTMLDialogElement>(null);
 
-    // モーダル関係
     const [modalMessage, setModalMessage] = useState<string>('');
     const [modalPostUrl, setModalPostUrl] = useState<string>('');
+    const [errorModalMessage, setErrorModalMessage] = useState<string>('');
+    const [errorModalColor, setErrorModalColor] = useState<string>('');
 
+    // ログインしていない時はモーダルを表示
     useEffect(() => {
         if (!isAuth) {
             noAuthModal.current?.showModal();
@@ -42,10 +45,13 @@ const Post = () => {
         publish_status: "0",
     }
 
+    // バリデーション
     const schema = z.object({
         title: z.string().min(1, 'タイトルは必須です').max(50, 'タイトルは50文字以内で入力してください'),
         comment: z.string().max(500, 'コメントは500文字以内で入力してください'),
         code: z.string().min(1, 'コードは必須です').max(1000, 'コードは1000文字以内で入力してください'),
+        language: z.string().min(1, '言語は必須です'),
+        publish_status: z.string().min(1, '公開設定は必須です'),
     });
 
     const { register, handleSubmit, formState: { errors }, trigger, watch } = useForm({
@@ -60,7 +66,8 @@ const Post = () => {
     const language = watch('language');
     const publishStatus = watch('publish_status');
 
-    const onSubmit = async (data: any) => {
+    // 投稿処理
+    const onSubmit = async () => {
         try {
             const res = await axios.post<PostResponse>(route('post.post'), {
                 title: title,
@@ -69,13 +76,13 @@ const Post = () => {
                 language: language,
                 publish_status: parseInt(publishStatus, 10),
             });
-            console.log(res.data);
             setModalMessage(res.data.message);
             setModalPostUrl(`${import.meta.env.VITE_APP_URL}/view/${res.data?.url}`);
             PostResponseModal.current?.showModal();
-
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error(error.response.data)
+            setErrorModalMessage(error.response.data.message);
+            setErrorModalColor(error.response.data.color);
             PostErrorResponseModal.current?.showModal();
         }
     }
@@ -105,7 +112,7 @@ const Post = () => {
             <Head title="新規投稿" />
 
             <Modal modalRef={noAuthModal} color={"error"} message={"新規投稿をするにはログインが必要です"} />
-            <Modal modalRef={PostErrorResponseModal} color={"error"} message={"不明なエラーが発生しました"} />
+            <Modal modalRef={PostErrorResponseModal} color={errorModalColor} message={errorModalMessage} />
             <PostModal modalRef={PostResponseModal} message={modalMessage} url={modalPostUrl} />
 
             <Layout>
