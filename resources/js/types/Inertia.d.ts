@@ -1,4 +1,4 @@
-import { AlertColor, User } from ".";
+import { AlertColor, Post, User } from ".";
 
 export type InertiaPageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
@@ -11,4 +11,9 @@ export type InertiaPageProps<T extends Record<string, unknown> = Record<string, 
         message?: string;
         color?: AlertColor;
     };
+    posts?: {
+        items: Post[];
+        next_page_url: string | null;
+    };
+    [key: string]: unknown;
 };

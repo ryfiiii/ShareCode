@@ -60,11 +60,12 @@ const Setting = () => {
             console.log(res.data);
             setModalMessage(res.data.message);
             setModalColor(res.data.color);
-            res.data.avatar && setAvatar(res.data.avatar);
+            setAvatar(res.data.avatar);
 
         } catch (error: any) {
             setModalMessage(error.response.data.message);
             setModalColor(error.response.data.color);
+
         } finally {
             AlertModal.current?.showModal();
         }

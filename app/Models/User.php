@@ -33,8 +33,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        // 'password',
+        'email',
+        'email_verified_at',
         'remember_token',
+        'provider',
+        'provider_id',
+        'token',
+        'token_secret',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -48,5 +55,10 @@ class User extends Authenticatable
             // 'email_verified_at' => 'datetime',
             // 'password' => 'hashed',
         ];
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

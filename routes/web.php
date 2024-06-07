@@ -6,6 +6,7 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 /* 認証関係 */
@@ -14,8 +15,11 @@ Route::get('/auth/{provider}', [OAuthController::class, 'redirectProvider']);
 Route::get('/auth/callback/{provider}', [OAuthController::class, 'callbackProvider']);
 Route::get('/logout', [OAuthController::class, 'logout'])->name('logout');
 
-/* ホーム */
+/* ホーム & 投稿取得 */
 Route::get('/', HomeController::class)->name('home');
+
+/* 投稿詳細 */
+Route::get('/view/{slug}', ViewController::class)->name('view');
 
 /* 投稿 */
 Route::get('/post', PostController::class)->name('post');

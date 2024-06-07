@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
     const { props } = usePage<InertiaPageProps>();
     const [isVisible, setIsVisible] = useState(false);
 
-    console.log(props);
+    // console.log(props);
 
     useEffect(() => {
         if (props.flash?.message) {

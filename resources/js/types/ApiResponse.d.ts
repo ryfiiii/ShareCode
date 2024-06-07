@@ -1,4 +1,4 @@
-import { AlertColor } from ".";
+import { AlertColor, Post } from ".";
 
 export interface SettingResponse {
     avatar?: string;
@@ -11,4 +11,11 @@ export interface SettingResponse {
 export interface PostResponse {
     message: string;
     url: string;
+}
+
+export interface PostGetResponse {
+    posts: {
+        items: Post[];
+        next_page_url: string | null;
+    }
 }

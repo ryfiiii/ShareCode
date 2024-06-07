@@ -79,6 +79,7 @@ const Post = () => {
             setModalMessage(res.data.message);
             setModalPostUrl(`${import.meta.env.VITE_APP_URL}/view/${res.data?.url}`);
             PostResponseModal.current?.showModal();
+
         } catch (error: any) {
             console.error(error.response.data)
             setErrorModalMessage(error.response.data.message);
