@@ -77,7 +77,7 @@ const Post = () => {
                 publish_status: parseInt(publishStatus, 10),
             });
             setModalMessage(res.data.message);
-            setModalPostUrl(`${import.meta.env.VITE_APP_URL}/view/${res.data?.url}`);
+            setModalPostUrl(res.data?.url);
             PostResponseModal.current?.showModal();
 
         } catch (error: any) {

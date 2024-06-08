@@ -15,5 +15,6 @@ export type InertiaPageProps<T extends Record<string, unknown> = Record<string, 
         items: Post[];
         next_page_url: string | null;
     };
+    post?: Post;
     [key: string]: unknown;
 };

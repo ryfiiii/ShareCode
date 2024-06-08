@@ -29,7 +29,12 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $posts = Post::with('user')->where('publish_status', 1)->where('is_draft', false)->paginate($this->pagenate_per_page);
+        $posts = Post::with('user')
+            ->where('publish_status', 1)
+            ->where('is_draft', false)
+            ->orderBy('updated_at', 'desc')
+            ->paginate($this->pagenate_per_page);
+
         return Inertia::render('Home', [
             'posts' => [
                 'items' => $posts->items(),
@@ -44,7 +49,12 @@ class HomeController extends Controller
      */
     public function getPosts()
     {
-        $posts = Post::with('user')->where('publish_status', 1)->where('is_draft', false)->paginate($this->pagenate_per_page);
+        $posts = Post::with('user')
+            ->where('publish_status', 1)
+            ->where('is_draft', false)
+            ->orderBy('updated_at', 'desc')
+            ->paginate($this->pagenate_per_page);
+
         return response()->json([
             'posts' => [
                 'items' => $posts->items(),

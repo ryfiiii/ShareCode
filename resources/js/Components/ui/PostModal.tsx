@@ -1,3 +1,6 @@
+import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/react";
+
 interface ModalProps {
     modalRef: React.RefObject<HTMLDialogElement>;
     message: string;
@@ -7,7 +10,7 @@ interface ModalProps {
 const PostModal = ({ modalRef, message, url }: ModalProps) => {
 
     const handleButtonClick = () => {
-        window.location.href = url;
+        Inertia.visit(route('view', { slug: url }));
     };
 
     return (
@@ -16,8 +19,8 @@ const PostModal = ({ modalRef, message, url }: ModalProps) => {
                 <div className="modal-box border-4 border-success">
                     <div className="flex flex-col justify-center items-center">
                         <p className="py-3 text-center text-lg">{message}</p>
-                        <input type="text" className="input w-full disabled:cursor-pointer" disabled value={url} />
-                        <a href={url} className="underline mt-5">投稿を見る</a>
+                        <input type="text" className="input w-full disabled:cursor-pointer" disabled value={`${import.meta.env.VITE_APP_URL}/view/${url}`} />
+                        <Link href={route('view', { slug: url })} className="underline mt-5">投稿を見る</Link>
                     </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">

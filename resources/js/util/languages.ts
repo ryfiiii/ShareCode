@@ -25,7 +25,6 @@ export const languages: Record<string, string> = {
     sass: 'SASS',
     graphql: 'GraphQL',
     dockerfile: 'Dockerfile',
-    nginx: 'Nginx configuration',
-    apache: 'Apache configuration',
+    nginx: 'Nginx',
     powershell: 'PowerShell',
 };
