@@ -25,21 +25,25 @@ const Home = () => {
     const lastElementRef = useRef<HTMLDivElement>(null);
 
     const fetchMorePosts = async () => {
-        if (!nextPageUrl) {
-            return;
-        }
+        if (!nextPageUrl || loading) return;
+
         setLoading(true);
-        const response = await axios.get<PostGetResponse>(nextPageUrl);
-        setPosts((prevPosts) => [...prevPosts, ...response.data.posts.items]);
-        setNextPageUrl(response.data.posts.next_page_url);
-        setLoading(false);
+        try {
+            const response = await axios.get<PostGetResponse>(nextPageUrl);
+            setPosts((prevPosts) => [...prevPosts, ...response.data.posts.items]);
+            setNextPageUrl(response.data.posts.next_page_url);
+        } catch (error: any) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
         const options = {
             root: null,
             rootMargin: '0px',
-            threshold: 1,
+            threshold: 0.5,
         };
 
         observer.current = new IntersectionObserver((entries) => {
@@ -57,7 +61,7 @@ const Home = () => {
                 observer.current.unobserve(lastElementRef.current);
             }
         };
-    }, [nextPageUrl]);
+    }, [nextPageUrl, loading]);
 
     // クリック時に遷移
     const handleClick = (slug: string) => {
