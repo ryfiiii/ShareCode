@@ -1,6 +1,6 @@
 import Footer from "@/Components/Sections/Footer";
 import Header from "@/Components/Sections/Header";
-import PostMenu from "@/Components/ui/PostMenu";
+import PostMenu from "@/Components/Sections/PostMenu";
 import Toast from "@/Components/ui/Toast";
 import { InertiaPageProps } from "@/types/Inertia";
 import { usePage } from "@inertiajs/react";

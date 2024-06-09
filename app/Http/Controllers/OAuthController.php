@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Util\Util;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,8 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
 {
+    use Util;
+
     /**
      * 指定されたプロバイダへリダイレクト
      * @param string $provider
@@ -38,7 +41,7 @@ class OAuthController extends Controller
             Log::error($provider . '認証エラー: ' . $e->getMessage());
             return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         } catch (Exception $e) {
-            Log::error('不明なエラー: ' . $e);
+            Log::error('不明なエラー: ' . $e); // todo Githubログイン時のバグを修正する
             return redirect()->route('home')->with(['message' => 'ログインに失敗しました', 'color' => 'error']);
         }
 
@@ -55,6 +58,7 @@ class OAuthController extends Controller
             'provider_id' => $socialUser->getId(),
             'provider' => $provider,
             'name' => $socialUser->getName(),
+            'user_id' => $this->generateUniqueUserId(),
             'email' => $socialUser->getEmail(),
             'avatar' => $socialUser->getAvatar(),
             'favorite_language' => 'javascript', // デフォルトはjavascript
@@ -73,5 +77,18 @@ class OAuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('home')->with(['message' => 'ログアウトしました', 'color' => 'info']);
+    }
+
+    /**
+     * 重複しないユーザーIDを生成
+     */
+    private function generateUniqueUserId()
+    {
+        $userId = $this->randomStr(10);
+        // 重複するユーザーIDが存在する場合は再帰的に呼び出す
+        if (User::where('user_id', $userId)->exists()) {
+            return $this->generateUniqueUserId();
+        }
+        return $userId;
     }
 }

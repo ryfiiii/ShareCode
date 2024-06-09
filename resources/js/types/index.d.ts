@@ -2,6 +2,7 @@ export type AlertColor = 'success' | 'error' | 'warning' | 'info';
 
 export interface User {
     name: string;
+    user_id: string;
     email?: string;
     avatar: string;
     favorite_language: string;
@@ -10,7 +11,6 @@ export interface User {
 export interface Post {
     id: number;
     slug: string;
-    user_id: number;
     title: string;
     comment: string;
     code: string;

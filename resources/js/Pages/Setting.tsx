@@ -16,6 +16,8 @@ const Setting = () => {
     const [uploadAvatar, setUploadAvatar] = useState<FileList | null>(null);
     const [avatar, setAvatar] = useState(props.auth.user?.avatar);
 
+    console.log(props.auth.user);
+
     // モーダル関係
     const AlertModal = useRef<HTMLDialogElement>(null);
     const [modalMessage, setModalMessage] = useState<string>('');
@@ -25,13 +27,22 @@ const Setting = () => {
     const defaultValues = {
         avatar: props.auth.user?.avatar,
         name: props.auth.user?.name,
+        user_id: props.auth.user?.user_id,
         language: props.auth.user?.favorite_language,
     }
 
     // バリデーション
     const schema = z.object({
-        name: z.string().min(1, 'ユーザー名は必須です').max(25, 'ユーザー名は25文字以内で入力してください'),
-        language: z.string().min(1, '言語は必須です'),
+        name: z.string()
+            .min(1, '表示名は必須です')
+            .max(15, '表示名は15文字以内で入力してください')
+            .regex(/^[a-zA-Z0-9ぁ-んァ-ン一-龯]+$/, '表示名には英数字、ひらがな、カタカナ、漢字のみ使用できます'),
+        user_id: z.string()
+            .min(1, 'ユーザーIDは必須です')
+            .max(12, 'ユーザーIDは12文字以内で入力してください')
+            .regex(/^[a-zA-Z0-9_]+$/, 'ユーザーIDは英数字と_のみ使用できます'),
+        language: z.string()
+            .min(1, '言語は必須です'),
     });
 
     const { register, handleSubmit, formState: { errors }, trigger, watch } = useForm({
@@ -41,12 +52,14 @@ const Setting = () => {
     });
 
     const name = watch('name');
+    const user_id = watch('user_id');
     const language = watch('language');
 
     // フォームデータ作成
     const formData = new FormData();
     (uploadAvatar && uploadAvatar[0]) && formData.append('avatar', uploadAvatar[0]);
     formData.append('name', name ?? '');
+    formData.append('user_id', user_id ?? '');
     formData.append('favorite_language', language ?? '');
 
     // フォーム送信処理
@@ -63,6 +76,7 @@ const Setting = () => {
             setAvatar(res.data.avatar);
 
         } catch (error: any) {
+            console.error(error.response);
             setModalMessage(error.response.data.message);
             setModalColor(error.response.data.color);
 
@@ -99,13 +113,18 @@ const Setting = () => {
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="name" className="mb-1 text-sm">ユーザー名</label>
+                            <label htmlFor="name" className="mb-1 text-sm">表示名</label>
                             <input type="text" {...register('name')} onBlur={() => trigger('name')} id="name" className={`input input-bordered ${errors.name && `input-error`}`} value={name} />
-                            {errors.name && <span className="text-sm text-error">※{errors.name.message as string}</span>}
+                            {errors.name && <span className="mt-2 text-sm text-error">※{errors.name.message as string}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="user_id" className="mb-1 text-sm">ユーザーID</label>
+                            <input type="text" {...register('user_id')} onBlur={() => trigger('user_id')} id="name" className={`input input-bordered ${errors.user_id && `input-error`}`} value={user_id} />
+                            {errors.user_id && <span className="mt-2 text-sm text-error">※{errors.user_id.message as string}</span>}
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="email" className="mb-1 text-sm">メールアドレス</label>
-                            <input type="text" id="email" className="input input-bordered" disabled value={props.auth.user?.email} />
+                            <input type="text" id="email" className="mt-2 input input-bordered" disabled value={props.auth.user?.email} />
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="lang" className="mb-1 text-sm">お気に入りの言語</label>

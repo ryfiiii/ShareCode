@@ -16,6 +16,7 @@ import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 const Home = () => {
 
     const { props } = usePage<InertiaPageProps>();
+    console.log(props);
 
     const [posts, setPosts] = useState(props.posts?.items || []);
     const [nextPageUrl, setNextPageUrl] = useState(props.posts?.next_page_url);

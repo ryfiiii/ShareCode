@@ -32,9 +32,9 @@ const Header = () => {
                         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                             {props.auth?.user ? (
                                 <>
-                                    <li className="my-1"><Link href={route('mypage')}>マイページ</Link></li>
-                                    <li className="my-1"><Link href={route('setting')}>設定</Link></li>
-                                    <li className="my-1"><Link href={route('logout')}>ログアウト</Link></li> {/* todo あとでアイコン追加 */}
+                                    <li><Link href={route('mypage')} className="py-3">マイページ</Link></li>
+                                    <li><Link href={route('setting')} className="py-3">設定</Link></li>
+                                    <li><Link href={route('logout')} className="py-3">ログアウト</Link></li> {/* todo あとでアイコン追加 */}
                                 </>
                             ) : (
                                 <li><label onClick={() => loginModal.current?.showModal()}>ログイン</label></li>

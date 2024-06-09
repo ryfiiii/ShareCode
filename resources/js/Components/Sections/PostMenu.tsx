@@ -10,8 +10,8 @@ const PostMenu = () => {
                     <FontAwesomeIcon icon={faPlus} className="text-2xl text-slate-500" />
                 </div>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li className="my-1"><Link href={route('post')}>新規投稿</Link></li>
-                    <li className="my-1"><Link href={route('draft')}>下書き</Link></li>
+                    <li><Link href={route('post')} className="py-3">新規投稿</Link></li>
+                    <li><Link href={route('draft')} className="py-3">下書き</Link></li>
                 </ul>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserValidate;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Util\Util;
 
@@ -22,7 +23,14 @@ class SettingController extends Controller
     public function update(UpdateUserValidate $request)
     {
         $user = $request->user();
+
+        // ユーザーIDの重複チェック
+        if ($user->user_id != $request->user_id && User::where('user_id', $request->user_id)->exists()) {
+            return response()->json(['message' => 'そのユーザーIDは既に使用されています', 'color' => 'error'], 422);
+        }
+
         $user->name = $request->name;
+        $user->user_id = $request->user_id;
         $user->favorite_language = $request->favorite_language;
 
         // 画像の保存
