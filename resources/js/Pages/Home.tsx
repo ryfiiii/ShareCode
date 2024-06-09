@@ -1,7 +1,7 @@
 import Layout from "@/Layouts/Layout";
 import { Post } from "@/types";
 import { InertiaPageProps } from "@/types/Inertia";
-import { Head, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import Highlight from 'react-highlight';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import { useEffect, useRef, useState } from "react";
@@ -75,6 +75,12 @@ const Home = () => {
         Inertia.visit(route('view', { slug: slug }));
     }
 
+    // div内のLinkをクリックした時は、ユーザーページに遷移
+    const handleUserLinkClick = (e: React.MouseEvent<HTMLParagraphElement>, user_id: string) => {
+        e.stopPropagation();
+        Inertia.visit(route('user', { user: user_id }));
+    }
+
     return (
         <>
             <Head title="ホーム" />
@@ -82,7 +88,7 @@ const Home = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-8">
                     {posts?.map((post: Post) => {
                         return (
-                            <div onClick={() => handleClick(post.slug)} key={post.id} className="cursor-pointer bg-base-100 hover:bg-base-300 hover:translate-y-1 transition duration-300 w-full min-h-32 rounded-box shadow-lg hover:shadow-sm p-6 flex flex-col gap-3">
+                            <div onClick={() => handleClick(post.slug)} key={post.slug} className="cursor-pointer bg-base-100 hover:bg-base-300 hover:translate-y-1 transition duration-300 w-full min-h-32 rounded-box shadow-lg hover:shadow-sm p-6 flex flex-col gap-3">
                                 <h1 className="text-center text-2xl font-semibold line-clamp-2 lg:line-clamp-1 break-words">{post.title}</h1>
                                 <div className="flex-1">
                                     <p className="line-clamp-2 break-words h-12">{post.comment}</p>
@@ -105,13 +111,13 @@ const Home = () => {
                                 </div>
                                 <div className="flex-1 mt-1">
                                     <div className="flex items-end">
-                                        <div className="flex-1 flex gap-2 items-center">
+                                        <div className="flex-1 flex gap-2 items-center" onClick={(e) => handleUserLinkClick(e, post.user.user_id)}>
                                             <div className="avatar">
-                                                <div className="w-12 rounded-full border-2 border-base-300">
+                                                <div className="w-12 rounded-full border-2 border-base-300 hover:scale-110 transform duration-200">
                                                     <img src={post.user.avatar} alt="icon" />
                                                 </div>
                                             </div>
-                                            <p className="text-base">{post.user.name}</p>
+                                            <p className="text-base hover:underline">{post.user.name}</p>
                                         </div>
                                         <div className="flex-1">
                                             <p className="text-xs lg:text-sm text-right">{dayjs(post.published_at).format('YYYY-MM-DD HH:mm')}</p>

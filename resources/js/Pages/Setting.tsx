@@ -124,7 +124,7 @@ const Setting = () => {
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="email" className="mb-1 text-sm">メールアドレス</label>
-                            <input type="text" id="email" className="mt-2 input input-bordered" disabled value={props.auth.user?.email} />
+                            <input type="text" id="email" className="input input-bordered" disabled value={props.auth.user?.email} />
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="lang" className="mb-1 text-sm">お気に入りの言語</label>

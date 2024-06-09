@@ -2,17 +2,17 @@ import Layout from "@/Layouts/Layout";
 import { InertiaPageProps } from "@/types/Inertia";
 import { Head, usePage } from "@inertiajs/react";
 
-const Draft = () => {
+const User = () => {
 
     const { props } = usePage<InertiaPageProps>();
     return (
         <>
-            <Head title="下書き" />
+            <Head title="ユーザー" />
             <Layout>
-                下書き
+                ユーザー
             </Layout>
         </>
     );
 };
 
-export default Draft;
+export default User;

@@ -48,7 +48,6 @@ class SettingController extends Controller
 
         $user->save();
 
-        // todo axiosでやり取りするように変更
         return response()->json([
             'avatar' => $user->avatar,
             'name' => $user->name,
